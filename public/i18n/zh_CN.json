@@ -1,0 +1,15 @@
+{
+    "addTopBarIcon": "清理空文档",
+    "allEmptyDoc": "当前共有 ${count} 个空文档：",
+    "noEmptyDoc": "🎉 当前没有发现空文档",
+    "clickToView": "请点击上方文档进行查看",
+    "deleteTitle": "确认删除",
+    "deleteConfirm": "确定要永久删除 ${count} 个文档吗？",
+    "irreversible": "该操作不可逆！",
+    "deleteButton": "删除选中文档",
+    "cancelButton": "取消",
+    "confirmDelete": "确认删除",
+    "deleteSuccess": "✅ 已删除 ${count} 个空文档",
+    "deleteError": "❌ 删除失败：${msg}",
+    "findError": "文档获取失败"
+}

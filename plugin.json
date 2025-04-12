@@ -1,0 +1,45 @@
+{
+  "name": "siyuan-empty-doc-cleaner",
+  "author": "Glaube-TY",
+  "url": "https://github.com/Glaube-TY/siyuan-empty-doc-cleaner",
+  "version": "0.0.1",
+  "minAppVersion": "3.0.12",
+  "backends": [
+    "windows",
+    "linux",
+    "darwin",
+    "ios",
+    "android",
+    "harmony",
+    "docker"
+  ],
+  "frontends": [
+    "desktop",
+    "mobile",
+    "browser-desktop",
+    "browser-mobile",
+    "desktop-window"
+  ],
+  "displayName": {
+    "en_US": "Empty Doc Cleaner",
+    "zh_CN": "空文档清理"
+  },
+  "description": {
+    "en_US": "Detect and clean empty documents globally.",
+    "zh_CN": "全局检测并清理空文档。"
+  },
+  "readme": {
+    "en_US": "README.md",
+    "zh_CN": "README_zh_CN.md"
+  },
+  "funding": {
+    "custom": [
+      "https://docs.qq.com/aio/DR2ZZeUdwT09JaHBr"
+    ]
+  },
+  "keywords": [
+    "plugin",
+    "sample",
+    "插件样例"
+  ]
+}
