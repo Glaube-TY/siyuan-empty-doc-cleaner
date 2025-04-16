@@ -4,7 +4,6 @@ import {
     getFrontend,
     IModel,
 } from "siyuan";
-import "@/index.scss";
 import setPage from "@/page.svelte";
 import { svelteDialog } from "./libs/dialog";
 
@@ -19,6 +18,8 @@ export default class PluginSample extends Plugin {
 
     async onload() {
         this.data[STORAGE_NAME] = { readonlyText: "Readonly" };
+
+        this.i18n = {...this.i18n,};
 
         await this.loadData(STORAGE_NAME);
 
@@ -46,19 +47,20 @@ export default class PluginSample extends Plugin {
     
 
     async onunload() {
-        showMessage("感谢使用，下次再会！");
+        showMessage(this.i18n.unload);
     }
 
 
     private showDialog() {
         svelteDialog({
-            title: `🗑 清理空文档`,
+            title: this.i18n.setTitle,
             width: this.isMobile ? "92vw" : "720px",
             constructor: (container: HTMLElement) => {
                 return new setPage({
                     target: container,
                     props: {
                         app: this.app,
+                        i18n: this.i18n,
                     }
                 });
             }

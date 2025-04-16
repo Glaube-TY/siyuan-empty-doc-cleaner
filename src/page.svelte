@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte"; // Svelte 生命周期钩子 (组件挂载/销毁时触发)
     import { sql as query, removeDoc } from "@/api"; // 自定义 API 模块 (版本查询和 SQL 执行接口)
-    import { showMessage, Protyle } from "siyuan"; // 思源笔记官方 API (消息提示、POST 请求、编辑器组件)
+    import { showMessage, Protyle, I18N } from "siyuan"; // 思源笔记官方 API (消息提示、POST 请求、编辑器组件)
 
     interface DocItem {
         id: string;
@@ -10,12 +10,12 @@
         path: string; // 新增路径字段
     }
 
-    export let app; // 接收父组件传递的 app 实例
+    export let app;
+    export let i18n: I18N; // 使用官方 I18N 类型
 
     let divProtyle: HTMLDivElement;
     let protyle: any;
     let blockID: string = "";
-
     let emptydocs: DocItem[] = [];
     $: console.log(emptydocs); // 触发响应式更新
     let selectedDoc: DocItem | null = null;
@@ -67,7 +67,7 @@
                 }
             }
         } catch (error) {
-            showMessage(`文档获取失败: ${error.message}`, 5000, "error");
+            showMessage(`${i18n.findError} ${error.message}`, 5000, "error");
         }
     }
 
@@ -103,7 +103,7 @@
             );
 
             showMessage(
-                `✅ 已删除 ${selectedIds.length} 个空文档`,
+                `${i18n.deleteSuccess1} ${selectedIds.length} ${i18n.deleteSuccess2}`,
                 5000,
                 "info",
             );
@@ -112,7 +112,7 @@
             );
             selectedIds = [];
         } catch (error) {
-            showMessage(`❌ 删除失败: ${error.message}`, 5000, "error");
+            showMessage(`${i18n.deleteError} ${error.message}`, 5000, "error");
         }
     }
 
@@ -127,7 +127,7 @@
 
 <div class="b3-dialog__content">
     <div class="flex-container">
-        <span>当前文档共有{emptydocs.length}个空文档：</span>
+        <span>{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span>
         <button
             class="b3-button b3-button--outline"
             on:click={() => {
@@ -140,7 +140,7 @@
             <svg class="b3-button__icon"
                 ><use xlink:href="#iconTrashcan"></use></svg
             >
-            删除选中文档
+            {i18n.deleteButton}
         </button>
     </div>
     <div class="fn__hr" />
@@ -165,7 +165,7 @@
                 </button>
             </div>
         {:else}
-            <div class="empty-tip">🎉 当前没有发现空文档</div>
+            <div class="empty-tip">{this.noEmptyDoc}</div>
         {/each}
     </div>
     <div class="fn__hr" />
@@ -173,7 +173,7 @@
         {#if selectedDoc}
             {selectedDoc.name} (ID: {selectedDoc.id})
         {:else}
-            请点击上方文档进行查看
+            {i18n.clickToView}
         {/if}
     </div>
     <div class="fn__hr" />
@@ -196,10 +196,12 @@
                 <svg class="b3-dialog__icon" aria-hidden="true">
                     <use xlink:href="#iconTrashcan" />
                 </svg>
-                <h2 class="b3-dialog__title">确认删除</h2>
+                <h2 class="b3-dialog__title">{i18n.confirmDelete}</h2>
             </div>
             <div class="b3-dialog__body">
-                确定要永久删除 {deleteCount} 个文档吗？<span class="warning-text">该操作不可逆！</span>
+                {i18n.deleteConfirm1} {deleteCount} {i18n.deleteConfirm2}<span
+                    class="warning-text">{i18n.irreversible}</span
+                >
             </div>
             <div class="b3-dialog__footer">
                 <button
@@ -207,11 +209,11 @@
                     on:click={() => {
                         deleteSelectedDocs();
                         showConfirmDialog = false; // 添加关闭对话框操作
-                    }}>确认删除</button
+                    }}>{i18n.ensureDelete}</button
                 >
                 <button
                     class="b3-button"
-                    on:click={() => (showConfirmDialog = false)}>取消</button
+                    on:click={() => (showConfirmDialog = false)}>{i18n.cancelButton}</button
                 >
             </div>
         </div>
