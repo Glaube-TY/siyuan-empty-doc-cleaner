@@ -1,3 +1,5 @@
+[中文](./README_zh_CN.md) | English
+
 # Plugin Introduction
 
 - This plugin helps you automatically retrieve all empty documents in the Siyuan Notes workspace and generate a list of all empty files.
