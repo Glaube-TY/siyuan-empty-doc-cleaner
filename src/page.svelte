@@ -23,18 +23,15 @@
     let showConfirmDialog = false;
     let deleteCount = 0;
 
-    // 组件挂载时初始化
     onMount(async () => {
         protyle = await initProtyle(); // 初始化编辑器
         await findEmptyDocuments();
     });
 
-    // 组件销毁时清理
     onDestroy(() => {
         protyle.destroy(); // 销毁编辑器实例
     });
 
-    // 查询空文档
     async function findEmptyDocuments() {
         try {
             const findSQL = `
@@ -140,17 +137,23 @@
 
 <div class="b3-dialog__content">
     <div class="flex-container">
-        <span>{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span>
+        <span
+            >{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span
+        >
         <div style="margin-left: auto; display: flex; gap: 8px;">
             {#if emptydocs.length > 0}
                 <button
                     class="b3-button b3-button--outline"
                     on:click={() => {
-                        selectedIds = selectedIds.length === emptydocs.length 
-                            ? [] 
-                            : emptydocs.map(d => d.id);
-                    }}>
-                    {selectedIds.length === emptydocs.length ? i18n.cancelSelectAll : i18n.selectAll}
+                        selectedIds =
+                            selectedIds.length === emptydocs.length
+                                ? []
+                                : emptydocs.map((d) => d.id);
+                    }}
+                >
+                    {selectedIds.length === emptydocs.length
+                        ? i18n.cancelSelectAll
+                        : i18n.selectAll}
                 </button>
             {/if}
             <button
@@ -159,8 +162,11 @@
                     if (selectedIds.length === 0) return;
                     deleteCount = selectedIds.length;
                     showConfirmDialog = true;
-                }}>
-                <svg class="b3-button__icon"><use xlink:href="#iconTrashcan"></use></svg>
+                }}
+            >
+                <svg class="b3-button__icon"
+                    ><use xlink:href="#iconTrashcan"></use></svg
+                >
                 {i18n.deleteButton}
             </button>
         </div>
