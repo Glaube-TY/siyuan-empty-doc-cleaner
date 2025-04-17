@@ -1,11 +1,11 @@
 {
   "name": "siyuan-empty-doc-cleaner",
-  "version": "0.3.6",
+  "version": "1.0.2",
   "type": "module",
-  "description": "This is a sample plugin based on vite and svelte for Siyuan (https://b3log.org/siyuan)",
-  "repository": "",
-  "homepage": "",
-  "author": "frostime",
+  "description": "This is a plugin for clearing empty documents for Siyuan (https://b3log.org/siyuan)",
+  "repository": "https://github.com/Glaube-TY/siyuan-empty-doc-cleaner",
+  "homepage": "https://github.com/Glaube-TY",
+  "author": "Glaube-TY",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development VITE_SOURCEMAP=inline vite build --watch",
