@@ -5,6 +5,10 @@
 - Click the document name in the list to preview the document content. (Confirm whether it is empty to avoid accidentally deletion)
 - Select the document you want to delete (multiple selection support), the plug-in will automatically delete the selected document.
 # Update instructions
+- 2025-04-17：V1.0.4
+    - Fixed the issue where no filtering was done when empty documents had subdocuments.
+    - Added a select all button to facilitate users to select all documents.
+    - Optimized prompts.
 - 2025-04-17：V1.0.3 Update the documentation.
 - 2025-04-17: V1.0.2 Fixed the issue of identifying widget pallet blocks as empty.
 - 2025-04-16: V1.0.1 fixed some issues.

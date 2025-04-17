@@ -6,18 +6,18 @@
     interface DocItem {
         id: string;
         name: string;
-        notebook: string; // 新增笔记本字段
-        path: string; // 新增路径字段
+        notebook: string;
+        path: string;
     }
 
     export let app;
-    export let i18n: I18N; // 使用官方 I18N 类型
+    export let i18n: I18N;
 
     let divProtyle: HTMLDivElement;
     let protyle: any;
     let blockID: string = "";
     let emptydocs: DocItem[] = [];
-    $: console.log(emptydocs); // 触发响应式更新
+    $: console.log(emptydocs);
     let selectedDoc: DocItem | null = null;
     let selectedIds: string[] = [];
     let showConfirmDialog = false;
@@ -52,6 +52,13 @@
                 FROM blocks AS other_child 
                 WHERE other_child.parent_id = parent.id 
                 AND other_child.type != 'p'
+            )
+            AND NOT EXISTS (
+                SELECT 1 
+                FROM blocks AS child_doc 
+                WHERE child_doc.path LIKE 
+                    SUBSTR(parent.path, 1, LENGTH(parent.path) - 3) || '/%'
+                AND child_doc.type = 'd'
             )
             GROUP BY parent.id
             HAVING (
@@ -133,23 +140,30 @@
 
 <div class="b3-dialog__content">
     <div class="flex-container">
-        <span
-            >{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span
-        >
-        <button
-            class="b3-button b3-button--outline"
-            on:click={() => {
-                if (selectedIds.length === 0) return;
-                deleteCount = selectedIds.length;
-                showConfirmDialog = true;
-            }}
-            style="margin-left: auto;"
-        >
-            <svg class="b3-button__icon"
-                ><use xlink:href="#iconTrashcan"></use></svg
-            >
-            {i18n.deleteButton}
-        </button>
+        <span>{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span>
+        <div style="margin-left: auto; display: flex; gap: 8px;">
+            {#if emptydocs.length > 0}
+                <button
+                    class="b3-button b3-button--outline"
+                    on:click={() => {
+                        selectedIds = selectedIds.length === emptydocs.length 
+                            ? [] 
+                            : emptydocs.map(d => d.id);
+                    }}>
+                    {selectedIds.length === emptydocs.length ? i18n.cancelSelectAll : i18n.selectAll}
+                </button>
+            {/if}
+            <button
+                class="b3-button b3-button--outline"
+                on:click={() => {
+                    if (selectedIds.length === 0) return;
+                    deleteCount = selectedIds.length;
+                    showConfirmDialog = true;
+                }}>
+                <svg class="b3-button__icon"><use xlink:href="#iconTrashcan"></use></svg>
+                {i18n.deleteButton}
+            </button>
+        </div>
     </div>
     <div class="fn__hr" />
     <div class="doc-list">
@@ -173,7 +187,7 @@
                 </button>
             </div>
         {:else}
-            <div class="empty-tip">{this.noEmptyDoc}</div>
+            <div class="empty-tip">{i18n.sussess}</div>
         {/each}
     </div>
     <div class="fn__hr" />

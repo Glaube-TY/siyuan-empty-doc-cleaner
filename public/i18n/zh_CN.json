@@ -16,5 +16,8 @@
     "deleteSuccess1": "✅ 已删除",
     "deleteSuccess2": "个空文档",
     "deleteError": "❌ 删除失败：",
-    "findError": "文档获取失败："
+    "findError": "文档获取失败：",
+    "sussess": "🥰您的笔记本很干净，没有多余的空文档~",
+    "cancelSelectAll": "取消全选",
+    "selectAll": "全选"
 }

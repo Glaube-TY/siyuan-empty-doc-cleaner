@@ -16,5 +16,8 @@
     "deleteSuccess1": "✅ ",
     "deleteSuccess2": " empty documents have been deleted",
     "deleteError": "❌ Deletion failed:",
-    "findError": "Failed to obtain the document:"
+    "findError": "Failed to obtain the document:",
+    "sussess": "🥰Your notebook is clean, no extra empty documents ~",
+    "cancelSelectAll": "Cancel all selections",
+    "selectAll": "Select All"
 }
