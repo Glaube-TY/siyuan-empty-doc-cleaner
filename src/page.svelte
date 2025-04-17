@@ -37,34 +37,40 @@
     // 查询空文档
     async function findEmptyDocuments() {
         try {
-            const alldocs = await query(
-                "select * from blocks where type = 'd' limit 100000000",
-            );
+            const findSQL = `
+            SELECT parent.id AS id,
+                   parent.content AS content,
+                   parent.box AS box,
+                   parent.path AS path
+            FROM blocks AS parent
+            LEFT JOIN blocks AS child 
+                ON parent.id = child.parent_id
+                AND child.type = 'p'
+            WHERE parent.type = 'd'
+            AND NOT EXISTS (
+                SELECT 1 
+                FROM blocks AS other_child 
+                WHERE other_child.parent_id = parent.id 
+                AND other_child.type != 'p'
+            )
+            GROUP BY parent.id
+            HAVING (
+                COUNT(child.id) = 0 OR (
+                    COUNT(child.id) = 1 
+                    AND TRIM(COALESCE(MAX(child.content), '')) = ''
+                )
+            )
+            LIMIT 100000000
+        `;
+
+            const alldocs = await query(findSQL);
             if (alldocs.length > 0) {
-                let i = 0;
-                while (i < alldocs.length) {
-                    let parent_id = alldocs[i].id;
-                    let childrenDocs = await query(
-                        `select * from blocks where parent_id = '${parent_id}' limit 100000000`,
-                    );
-                    if (
-                        childrenDocs.length === 1 ||
-                        childrenDocs.length === 0
-                    ) {
-                        if (childrenDocs[0].content === "") {
-                            emptydocs = [
-                                ...emptydocs,
-                                {
-                                    id: alldocs[i].id,
-                                    name: alldocs[i].content,
-                                    notebook: alldocs[i].box, // 新增
-                                    path: alldocs[i].path, // 新增
-                                },
-                            ]; // 响应式更新
-                        }
-                    }
-                    i += 1;
-                }
+                emptydocs = alldocs.map((doc) => ({
+                    id: doc.id,
+                    name: doc.content,
+                    notebook: doc.box,
+                    path: doc.path,
+                }));
             }
         } catch (error) {
             showMessage(`${i18n.findError} ${error.message}`, 5000, "error");
@@ -127,7 +133,9 @@
 
 <div class="b3-dialog__content">
     <div class="flex-container">
-        <span>{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span>
+        <span
+            >{i18n.EmptyDocNumber1}{emptydocs.length}{i18n.EmptyDocNumber2}</span
+        >
         <button
             class="b3-button b3-button--outline"
             on:click={() => {
@@ -199,8 +207,10 @@
                 <h2 class="b3-dialog__title">{i18n.confirmDelete}</h2>
             </div>
             <div class="b3-dialog__body">
-                {i18n.deleteConfirm1} {deleteCount} {i18n.deleteConfirm2}<span
-                    class="warning-text">{i18n.irreversible}</span
+                {i18n.deleteConfirm1}
+                {deleteCount}
+                {i18n.deleteConfirm2}<span class="warning-text"
+                    >{i18n.irreversible}</span
                 >
             </div>
             <div class="b3-dialog__footer">
@@ -213,7 +223,8 @@
                 >
                 <button
                     class="b3-button"
-                    on:click={() => (showConfirmDialog = false)}>{i18n.cancelButton}</button
+                    on:click={() => (showConfirmDialog = false)}
+                    >{i18n.cancelButton}</button
                 >
             </div>
         </div>
