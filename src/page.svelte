@@ -56,6 +56,22 @@
                 WHERE child_doc.path LIKE 
                     SUBSTR(parent.path, 1, LENGTH(parent.path) - 3) || '/%'
                 AND child_doc.type = 'd'
+                AND EXISTS (  -- 改为检查存在非空子文档
+                    SELECT 1 FROM (
+                        -- 子文档存在非段落类型子块
+                        SELECT 1 
+                        FROM blocks AS grandchild 
+                        WHERE grandchild.parent_id = child_doc.id
+                        AND grandchild.type != 'p'
+                        UNION ALL
+                        -- 或子文档存在非空段落
+                        SELECT 1 
+                        FROM blocks AS grandchild_p 
+                        WHERE grandchild_p.parent_id = child_doc.id
+                        AND grandchild_p.type = 'p'
+                        AND TRIM(COALESCE(grandchild_p.content, '')) != ''
+                    )
+                )
             )
             GROUP BY parent.id
             HAVING (
