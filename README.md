@@ -5,13 +5,14 @@
 - Click the document name in the list to preview the document content. (Confirm whether it is empty to avoid accidentally deletion)
 - Select the document you want to delete (multiple selection support), the plug-in will automatically delete the selected document.
 
-# 支持开发者
+# Support developers
 
 If you think this plugin is helpful to you, welcome to give me a reward.
 
-Reward address: [🌹Reward](https://cooperative-ferry-4dc.notion.site/SY-1e4c50d8b56c80eab1bacea41839be69)
+Reward address: [🌹Reward](https://ttl8ygt82u.feishu.cn/wiki/WMXvwcHXfip8hYkjsOPc1bNrnKe?from=from_copylink)
 
 # Update instructions
+- 2025-05-17：V1.0.7 Update the documentation.
 - 2025-04-29：V1.0.6
     - Update the documentation.
 - 2025-04-29：V1.0.5

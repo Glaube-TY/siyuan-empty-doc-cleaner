@@ -1,6 +1,6 @@
 {
   "name": "siyuan-empty-doc-cleaner",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "description": "This is a plugin for clearing empty documents for Siyuan (https://b3log.org/siyuan)",
   "repository": "https://github.com/Glaube-TY/siyuan-empty-doc-cleaner",
