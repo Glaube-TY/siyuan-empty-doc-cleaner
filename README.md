@@ -12,6 +12,7 @@ If you think this plugin is helpful to you, welcome to give me a reward.
 Reward address: [🌹Reward](https://ttl8ygt82u.feishu.cn/wiki/WMXvwcHXfip8hYkjsOPc1bNrnKe?from=from_copylink)
 
 # Update instructions
+- 2025-09-10 v1.0.8 Disable the plugin in the publishing service.
 - 2025-05-17：V1.0.7 Update the documentation.
 - 2025-04-29：V1.0.6
     - Update the documentation.

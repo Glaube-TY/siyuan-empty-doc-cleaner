@@ -2,8 +2,8 @@
   "name": "siyuan-empty-doc-cleaner",
   "author": "Glaube-TY",
   "url": "https://github.com/Glaube-TY/siyuan-empty-doc-cleaner",
-  "version": "1.0.7",
-  "minAppVersion": "3.0.12",
+  "version": "1.0.8",
+  "minAppVersion": "3.3.0",
   "backends": [
     "windows",
     "linux",
@@ -20,6 +20,7 @@
     "browser-mobile",
     "desktop-window"
   ],
+  "disabledInPublish": true,
   "displayName": {
     "en_US": "Empty Doc Cleaner",
     "zh_CN": "空文档清理"
